@@ -1,48 +1,15 @@
 import cn.hutool.core.io.FileUtil;
-import com.github.houbb.markdown.toc.core.impl.AtxMarkdownToc;
-import com.github.houbb.markdown.toc.vo.TocGen;
-import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
-import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
-import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
-import com.vladsch.flexmark.ext.aside.AsideExtension;
-import com.vladsch.flexmark.ext.attributes.AttributesExtension;
-import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
-import com.vladsch.flexmark.ext.definition.DefinitionExtension;
-import com.vladsch.flexmark.ext.emoji.EmojiExtension;
-import com.vladsch.flexmark.ext.enumerated.reference.EnumeratedReferenceExtension;
-import com.vladsch.flexmark.ext.escaped.character.EscapedCharacterExtension;
-import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
-import com.vladsch.flexmark.ext.gfm.issues.GfmIssuesExtension;
-import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
-import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
-import com.vladsch.flexmark.ext.gfm.users.GfmUsersExtension;
-import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
-import com.vladsch.flexmark.ext.ins.InsExtension;
-import com.vladsch.flexmark.ext.jekyll.front.matter.JekyllFrontMatterExtension;
-import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
-import com.vladsch.flexmark.ext.macros.MacrosExtension;
-import com.vladsch.flexmark.ext.media.tags.MediaTagsExtension;
-import com.vladsch.flexmark.ext.superscript.SuperscriptExtension;
-import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.ext.toc.TocExtension;
-import com.vladsch.flexmark.ext.typographic.TypographicExtension;
-import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
-import com.vladsch.flexmark.ext.xwiki.macros.MacroExtension;
-import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
-import com.vladsch.flexmark.ext.youtube.embedded.YouTubeLinkExtension;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.util.ast.Node;
-import com.vladsch.flexmark.util.data.DataHolder;
-import com.vladsch.flexmark.util.data.MutableDataSet;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.extra.template.Template;
+import cn.hutool.extra.template.TemplateConfig;
+import cn.hutool.extra.template.TemplateEngine;
+import cn.hutool.extra.template.TemplateUtil;
 import io.github.youthred.api.generator.util.MdUtil;
 import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 public class MdTest {
 
@@ -398,91 +365,22 @@ public class MdTest {
 
     @Test
     public void render() {
-        MdUtil.genTocMd("C:\\Users\\youthred\\Desktop\\a\\a1.md").forEach(System.out::println);
-        System.out.println(MdUtil.genTocHtml("C:\\Users\\youthred\\Desktop\\a\\a1.md"));
-        System.out.println(MdUtil.mdToHtml(md));
+        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", false));
     }
+
+    public static TemplateEngine ENGINE = TemplateUtil.createEngine(new TemplateConfig("templates", TemplateConfig.ResourceMode.CLASSPATH));
 
     @Test
-    public void toc() {
-        List<TocGen> tocGen = AtxMarkdownToc.newInstance()
-                .order(true)
-                .write(false)
-                .genTocDir("C:\\Users\\youthred\\Desktop\\a");
-        System.out.println(tocGen);
+    public void template() {
+        String docName = IdUtil.getSnowflakeNextId() + "";
+        String dir = "C:\\Users\\youthred\\Desktop\\a\\" + docName + "\\";
+        FileUtil.copy("templates/static", dir, true);
+        Template template = ENGINE.getTemplate("index.html");
+        template.render(
+                MapUtil.builder(new HashMap<String, Object>())
+                        .put("title", docName)
+                        .build(),
+                Paths.get(dir + docName + ".html").toFile()
+        );
     }
-
-    @Test
-    public void flexmark() {
-        final DataHolder OPTIONS = new MutableDataSet()
-                .set(Parser.EXTENSIONS, Arrays.asList(
-                        AbbreviationExtension.create(),
-                        AdmonitionExtension.create(),
-                        AnchorLinkExtension.create(),
-                        AsideExtension.create(),
-                        AttributesExtension.create(),
-                        AutolinkExtension.create(),
-                        DefinitionExtension.create(),
-                        EmojiExtension.create(),
-                        EnumeratedReferenceExtension.create(),
-                        EscapedCharacterExtension.create(),
-                        FootnoteExtension.create(),
-                        GfmIssuesExtension.create(),
-                        GfmUsersExtension.create(),
-                        StrikethroughExtension.create(),
-                        TaskListExtension.create(),
-                        GitLabExtension.create(),
-                        InsExtension.create(),
-                        JekyllFrontMatterExtension.create(),
-                        JekyllTagExtension.create(),
-                        MacrosExtension.create(),
-                        MediaTagsExtension.create(),
-                        SuperscriptExtension.create(),
-                        TablesExtension.create(),
-                        TocExtension.create(),
-                        TypographicExtension.create(),
-                        WikiLinkExtension.create(),
-                        MacroExtension.create(),
-                        YamlFrontMatterExtension.create(),
-                        YouTubeLinkExtension.create()
-                ))
-                .toImmutable();
-        Parser parser = Parser.builder(OPTIONS).build();
-        HtmlRenderer renderer = HtmlRenderer.builder(OPTIONS).build();
-        // You can re-use parser and renderer instances
-        Node document = parser.parse(md);
-        String html = renderer.render(document);
-        System.out.println(html);
-    }
-
-
-    @Test
-    public void generatorFileRoutes() {
-        final String pathStr = "C:\\Users\\youthred\\Desktop\\a\\";
-        final Path path = Paths.get(pathStr);
-        List<File> files = FileUtil.loopFiles(path.toFile());
-        for (File file : files) {
-//            System.out.println(FileUtil.getPrefix(file));
-            System.out.println(pathCut(file.getPath(), pathStr));
-        }
-    }
-
-    @Test
-    public void walkFiles() {
-        final String pathStr = "C:\\Users\\youthred\\Desktop\\a\\";
-        final Path path = Paths.get(pathStr);
-    }
-
-    private String pathCut(String p, String cut) {
-        return Paths.get(p).toAbsolutePath().toString().toLowerCase()
-                .replace(Paths.get(cut).toAbsolutePath().toString().toLowerCase(), "");
-    }
-
-//    private List<TreeNode<String>> pathTree(List<File> files) {
-//        List<TreeNode<String>> nodes = CollUtil.newArrayList();
-//        files.forEach(file -> nodes.add(new TreeNode<>(
-//                FileUtil.getParent(file.getAbsolutePath().toLowerCase(), 1),
-//
-//        )));
-//    }
 }

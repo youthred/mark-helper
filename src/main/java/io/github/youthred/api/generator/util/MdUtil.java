@@ -1,7 +1,10 @@
 package io.github.youthred.api.generator.util;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.houbb.markdown.toc.core.impl.AtxMarkdownToc;
+import com.github.houbb.markdown.toc.util.MdTocTextHelper;
 import com.github.houbb.markdown.toc.vo.TocGen;
 import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
@@ -39,9 +42,13 @@ import com.vladsch.flexmark.util.data.MutableDataSet;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * For flexmark-java
@@ -101,11 +108,12 @@ public class MdUtil {
      * 生成Markdown格式的TOC
      *
      * @param mdRawFilePath MD文件路径
+     * @param order         是否自动编号
      * @return Markdown TOC
      */
-    public static List<String> genTocMd(String mdRawFilePath) {
+    public static List<String> genTocMd(String mdRawFilePath, boolean order) {
         TocGen tocGen = AtxMarkdownToc.newInstance()
-                .order(true)
+                .order(order)
                 .write(false)
                 .genTocFile(mdRawFilePath);
         List<String> tocLines = tocGen.getTocLines();
@@ -125,12 +133,113 @@ public class MdUtil {
     }
 
     /**
+     * 生成Markdown格式的TOC
+     *
+     * @param mdTitles MD标题集合(#, ##, ...)
+     * @param order    是否自动编号
+     * @return Markdown TOC
+     */
+    public static List<String> genTocMd(List<String> mdTitles, boolean order) {
+        final String RETURN_LINE = System.getProperty("line.separator");
+        List<String> tocList = MdTocTextHelper.getTocList(mdTitles, order);
+        if (RETURN_LINE.equals(CollUtil.getLast(tocList))) {
+            tocList.remove(tocList.size() - 1);
+        }
+        return tocList;
+    }
+
+    /**
      * 生成HTML格式的TOC
      *
      * @param mdRawFilePath MD文件路径
+     * @param order         是否自动编号
      * @return HTML TOC
      */
-    public static String genTocHtml(String mdRawFilePath) {
-        return mdToHtml(StringUtils.join(genTocMd(mdRawFilePath), "\r\n"));
+    public static String genTocHtml(String mdRawFilePath, boolean order) {
+        return mdToHtml(StringUtils.join(genTocMd(mdRawFilePath, order), "\n"));
+    }
+
+    /**
+     * 生成HTML格式的TOC
+     *
+     * @param mdRawFilePath MD文件路径
+     * @param order         是否自动编号
+     * @return HTML TOC
+     */
+    public static List<String> genTocHtmlList(String mdRawFilePath, boolean order) {
+        return Arrays.asList(genTocHtml(mdRawFilePath, order).split("\n"));
+    }
+
+    /**
+     * 生成主页的导航菜单(扩展)
+     *
+     * @param indexTocHtmlList 所有文档的HTML格式的导航集合
+     * @return 以"\n"分隔的字符串
+     */
+    public static String genDirTocHtmlExt(List<String> indexTocHtmlList) {
+        return indexTocHtmlList.stream()
+                .map(tocHtml -> tocHtml.replace("<a", "<a onclick=\"setTitle(this.text)\""))    // 实现文档切换时标题同步切换的功能
+                .collect(Collectors.joining("\n"));
+    }
+
+    /**
+     * 生成主页的导航菜单(扩展)
+     *
+     * @param indexTocHtml 所有文档的HTML格式的导航
+     * @return 以"\n"分隔的字符串
+     */
+    public static String genDirTocHtmlExt(String indexTocHtml) {
+        return indexTocHtml.replaceAll("<a", "<a onclick=\"setTitle(this.text)\""); // 实现文档切换时标题同步切换的功能
+    }
+
+    /**
+     * 生成主页的导航菜单(扩展)
+     *
+     * @param dirPath 文档目录绝对路径
+     * @param order   是否自动编号
+     * @return 以"\n"分隔的字符串
+     */
+    public static String genDirTocHtmlExt(String dirPath, boolean order) {
+        return genDirTocHtmlExt(genDirTocHtml(dirPath, order));
+    }
+
+    /**
+     * 生成整个文档的以单个md文件为标题单位的Markdown格式的TOC
+     *
+     * @param dirPath 文档目录绝对路径
+     * @param order   是否自动编号
+     * @return Markdown TOC
+     */
+    public static List<String> genDirTocMd(String dirPath, boolean order) {
+        Path path = Paths.get(dirPath);
+        List<File> files = FileUtil.loopFiles(path.toFile());
+        List<String> mdTitles = files.stream()
+                .map(file -> pathCut(file.getPath(), dirPath))
+                .map(s -> StrUtil.repeat("#", StrUtil.count(s, "\\")) + " " + FileUtil.getPrefix(s))
+                .collect(Collectors.toList());
+        return MdUtil.genTocMd(mdTitles, order);
+    }
+
+    /**
+     * 生成整个文档的以单个md文件为标题单位的HTML格式的TOC
+     *
+     * @param dirPath 文档目录绝对路径
+     * @param order   是否自动编号
+     * @return HTML TOC
+     */
+    public static String genDirTocHtml(String dirPath, boolean order) {
+        return mdToHtml(StringUtils.join(genDirTocMd(dirPath, order), "\n"));
+    }
+
+    /**
+     * 只保留文档根目录为开头的相对路径
+     *
+     * @param p   待操作绝对路径
+     * @param cut 父级绝对路径
+     * @return 相对路径
+     */
+    private static String pathCut(String p, String cut) {
+        return Paths.get(p).toAbsolutePath().toString().toLowerCase()
+                .replace(Paths.get(cut).toAbsolutePath().toString().toLowerCase(), "");
     }
 }
