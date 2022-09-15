@@ -178,7 +178,7 @@ public class MdUtil {
      */
     public static String genDirTocHtmlExt(List<String> indexTocHtmlList) {
         return indexTocHtmlList.stream()
-                .map(tocHtml -> tocHtml.replace("<a", "<a onclick=\"setTitle(this.text)\""))    // 实现文档切换时标题同步切换的功能
+                .map(tocHtml -> tocHtml.replace("<a", "<a onclick=\"setDocTitle(this.text)\""))    // 实现文档切换时标题同步切换的功能
                 .collect(Collectors.joining("\n"));
     }
 
@@ -189,7 +189,14 @@ public class MdUtil {
      * @return 以"\n"分隔的字符串
      */
     public static String genDirTocHtmlExt(String indexTocHtml) {
-        return indexTocHtml.replaceAll("<a", "<a onclick=\"setTitle(this.text)\""); // 实现文档切换时标题同步切换的功能
+        return indexTocHtml
+                .replaceAll("<a",
+                        "<a onclick=\"setDocTitle(this.text)\"" // 实现文档切换时标题同步切换的功能
+                        + " target=\"doc-iframe\""  // 显示在iframe里
+                        + " "
+                )
+                .replaceAll("(?<=\"#).*(?=\")", "$0.html").replaceAll("href=\"#", "href=\"docs/")  // 修改链接href为文档路径
+                ;
     }
 
     /**

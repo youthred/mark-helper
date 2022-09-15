@@ -5,7 +5,7 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
-import io.github.youthred.api.generator.util.MdUtil;
+import io.github.youthred.api.generator.util.ThymeleafUtil;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -365,7 +365,9 @@ public class MdTest {
 
     @Test
     public void render() {
-        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", false));
+//        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", false));
+//        System.out.println(FileUtil.getPrefix("C:\\Users\\youthred\\Desktop\\a"));
+        ThymeleafUtil.render("C:\\Users\\youthred\\Desktop\\a", "C:\\Users\\youthred\\Desktop\\a");
     }
 
     public static TemplateEngine ENGINE = TemplateUtil.createEngine(new TemplateConfig("templates", TemplateConfig.ResourceMode.CLASSPATH));
