@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>[[${title}}]]</title>
+    <link rel="stylesheet" href="mdui/1.0.2/css/mdui.min.css"/>
+</head>
+<body class="mdui-theme-layout-dark mdui-theme-primary-indigo mdui-theme-accent-indigo mdui-theme-layout-auto mdui-drawer-body-left mdui-appbar-with-toolbar">
+<header class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide">
+    <div class="mdui-toolbar mdui-color-theme">
+        <a mdui-drawer="{target: '#main-drawer'}" href="javascript:;" class="mdui-btn mdui-ripple mdui-btn-icon"><i
+                class="mdui-icon material-icons">menu</i></a>
+<!--        <a href="javascript:;" class="mdui-typo-headline">[[${title}}]]</a>-->
+        <a href="javascript:;" class="mdui-typo-title">[[${title}}]]</a>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">more_vert</i></a>
+    </div>
+</header>
+<code>xxx</code>
+<div>&#x4DC0;</div>
+<div>&#x4DC1;</div>
+<div>&#x4DC2;</div>
+<div>&#x4DC3;</div>
+<div class="mdui-drawer" id="main-drawer">
+    <ul class="mdui-list" mdui-collapse="{accordion: true}">
+        <li class="mdui-collapse-item mdui-collapse-item-open">
+            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">people</i>
+                <div class="mdui-list-item-content">Audience</div>
+                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                <li class="mdui-list-item mdui-ripple mdui-list-item-active">Overview</li>
+                <li class="mdui-list-item mdui-ripple">Language</li>
+                <li class="mdui-list-item mdui-ripple">Location</li>
+                <li class="mdui-list-item mdui-ripple">New vs Returning</li>
+            </ul>
+        </li>
+        <li class="mdui-collapse-item">
+            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">people</i>
+                <div class="mdui-list-item-content">Audience</div>
+                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                <li class="mdui-list-item mdui-ripple">Overview</li>
+                <li class="mdui-list-item mdui-ripple">Language</li>
+                <li class="mdui-list-item mdui-ripple">Location</li>
+                <li class="mdui-list-item mdui-ripple">New vs Returning</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="mdui-fab-wrapper" mdui-fab>
+    <button class="mdui-fab mdui-ripple mdui-color-theme-accent">
+        <i class="mdui-icon material-icons">&#xe145;</i>
+        <i class="mdui-icon mdui-fab-opened material-icons">&#xe5cd;</i>
+    </button>
+<!--    <div class="mdui-fab-dial">-->
+<!--        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink"><i-->
+<!--                class="mdui-icon material-icons">backup</i></button>-->
+<!--        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red"><i-->
+<!--                class="mdui-icon material-icons">bookmark</i></button>-->
+<!--        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">access_alarms</i>-->
+<!--        </button>-->
+<!--        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i-->
+<!--                class="mdui-icon material-icons">touch_app</i></button>-->
+<!--    </div>-->
+</div>
+
+<script src="mdui/1.0.2/js/mdui.min.js"></script>
+<script src="mdui-jq/2.0.1/jq.min.js"></script>
+<script src="good-storage/1.1.1/storage.min.js"></script>
+<script>
+    let $ = JQ
+    const has = $('body').hasClass('mdui-theme-primary-indigo')
+    console.log(has)
+    console.log(store)
+    // store.set('xx', true)
+</script>
+</body>
+</html>
