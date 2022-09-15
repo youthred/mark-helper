@@ -19,9 +19,7 @@
         <lombok.version>1.18.24</lombok.version>
         <spring-shell-starter.version>2.0.1.RELEASE</spring-shell-starter.version>
         <thymeleaf.version>3.0.15.RELEASE</thymeleaf.version>
-        <commonmark.version>0.19.0</commonmark.version>
-        <commonmark-atlassian.version>0.17.0</commonmark-atlassian.version>
-        <commonmark-toc.version>1.1.2</commonmark-toc.version>
+        <markdown-toc.version>1.1.2</markdown-toc.version>
         <!-- flexmark: 对于 0.62.2 或更低版本，Java 8 或更高版本，Java 9+ 兼容。对于 0.64.0 或更高版本，Java 11 或更高版本 -->
         <flexmark.version>0.62.2</flexmark.version>
         <junit.version>4.13.2</junit.version>
@@ -80,36 +78,16 @@
             <artifactId>thymeleaf</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
-
-        <!--将markdown形式转成html格式的依赖-->
-<!--        <dependency>-->
-<!--            <groupId>org.commonmark</groupId>-->
-<!--            <artifactId>commonmark</artifactId>-->
-<!--            <version>${commonmark.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.commonmark</groupId>-->
-<!--            <artifactId>commonmark-ext-gfm-tables</artifactId>-->
-<!--            <version>${commonmark.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.commonmark</groupId>-->
-<!--            <artifactId>commonmark-ext-heading-anchor</artifactId>-->
-<!--            <version>${commonmark.version}</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.github.houbb</groupId>
             <artifactId>markdown-toc</artifactId>
-            <version>${commonmark-toc.version}</version>
+            <version>${markdown-toc.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark-all</artifactId>
             <version>${flexmark.version}</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
