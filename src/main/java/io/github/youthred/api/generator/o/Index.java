@@ -17,4 +17,5 @@ public class Index {
      * 或者[(${dirTocHtml})]
      */
     private String dirTocHtml;
+    private String firstDocPath;
 }

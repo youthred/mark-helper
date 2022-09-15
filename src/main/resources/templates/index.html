@@ -24,12 +24,12 @@
     </div>
 </header>
 <div class="mdui-drawer" id="main-drawer" style="word-break: break-all; white-space:normal;">
-    <div class="mdui-typo mdui-m-l-1 mdui-m-r-1">
+    <div class="mdui-typo mdui-m-a-1">
         [(${dirTocHtml})]
     </div>
 </div>
 
-<iframe id="doc-iframe" name="doc-iframe" style="display: block; border: none; width: 100%;"></iframe>
+<iframe id="doc-iframe" name="doc-iframe" style="display: block; border: none; width: 100%;" th:src="${firstDocPath}"></iframe>
 
 <script src="static/mdui/1.0.2/js/mdui.min.js"></script>
 <script src="static/mdui-jq/2.0.1/jq.min.js"></script>

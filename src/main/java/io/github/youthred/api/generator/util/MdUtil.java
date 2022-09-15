@@ -39,6 +39,8 @@ import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.data.DataHolder;
 import com.vladsch.flexmark.util.data.MutableDataSet;
+import io.github.youthred.api.generator.common.DirConstant;
+import io.github.youthred.api.generator.common.MdConstant;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -102,6 +104,16 @@ public class MdUtil {
         // You can re-use parser and renderer instances
         Node document = parser.parse(mdRaw);
         return renderer.render(document);
+    }
+
+    /**
+     * markdown格式转变成HTML格式
+     *
+     * @param mdPath md absolute path
+     * @return rendered html
+     */
+    public static String mdToHtmlByPath(String mdPath) {
+        return mdToHtml(FileUtil.readUtf8String(mdPath));
     }
 
     /**
@@ -192,10 +204,10 @@ public class MdUtil {
         return indexTocHtml
                 .replaceAll("<a",
                         "<a onclick=\"setDocTitle(this.text)\"" // 实现文档切换时标题同步切换的功能
-                        + " target=\"doc-iframe\""  // 显示在iframe里
-                        + " "
+                                + " target=\"doc-iframe\""  // 显示在iframe里
+                                + " "
                 )
-                .replaceAll("(?<=\"#).*(?=\")", "$0.html").replaceAll("href=\"#", "href=\"docs/")  // 修改链接href为文档路径
+                .replaceAll("(?<=#).*(?=\")", "$0.html").replaceAll("href=\"#", "href=\"" + DirConstant.DOCS + "/")  // 修改链接href为文档路径
                 ;
     }
 
@@ -218,11 +230,13 @@ public class MdUtil {
      * @return Markdown TOC
      */
     public static List<String> genDirTocMd(String dirPath, boolean order) {
-        Path path = Paths.get(dirPath);
-        List<File> files = FileUtil.loopFiles(path.toFile());
-        List<String> mdTitles = files.stream()
-                .map(file -> pathCut(file.getPath(), dirPath))
-                .map(s -> StrUtil.repeat("#", StrUtil.count(s, "\\")) + " " + FileUtil.getPrefix(s))
+        List<String> mdTitles = getDocFiles(dirPath).stream()
+                .map(file -> {
+                    // 生成相对路径
+                    String relativePath = pathCut(file.getPath(), dirPath);
+                    // 生成MD格式的标题
+                    return StrUtil.repeat("#", StrUtil.count(relativePath, "\\")) + " " + FileUtil.getPrefix(relativePath);
+                })
                 .collect(Collectors.toList());
         return MdUtil.genTocMd(mdTitles, order);
     }
@@ -236,6 +250,27 @@ public class MdUtil {
      */
     public static String genDirTocHtml(String dirPath, boolean order) {
         return mdToHtml(StringUtils.join(genDirTocMd(dirPath, order), "\n"));
+    }
+
+    /**
+     * 获取所有MD文档的绝对路径
+     *
+     * @param docDirPath 文档根目录绝对路径
+     * @return 所有MD文档的绝对路径列表
+     */
+    public static List<String> getDocsPaths(String docDirPath) {
+        return getDocFiles(docDirPath).stream().map(File::getAbsolutePath).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取文档文件列表
+     *
+     * @param docDirPath 文档根目录绝对路径
+     * @return 所有MD文档的文件列表
+     */
+    private static List<File> getDocFiles(String docDirPath) {
+        Path path = Paths.get(docDirPath);
+        return FileUtil.loopFiles(path.toFile(), pathname -> FileUtil.getSuffix(pathname).equalsIgnoreCase(MdConstant.SUFFIX));
     }
 
     /**

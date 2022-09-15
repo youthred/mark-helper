@@ -13,5 +13,4 @@ public class Doc {
     private String title;
     private String mdHtml;
     private String tocHtml;
-    private String staticPathPrefix;
 }

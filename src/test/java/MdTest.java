@@ -1,15 +1,5 @@
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.extra.template.Template;
-import cn.hutool.extra.template.TemplateConfig;
-import cn.hutool.extra.template.TemplateEngine;
-import cn.hutool.extra.template.TemplateUtil;
 import io.github.youthred.api.generator.util.ThymeleafUtil;
 import org.junit.Test;
-
-import java.nio.file.Paths;
-import java.util.HashMap;
 
 public class MdTest {
 
@@ -365,24 +355,21 @@ public class MdTest {
 
     @Test
     public void render() {
-//        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", false));
+//        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", true));
 //        System.out.println(FileUtil.getPrefix("C:\\Users\\youthred\\Desktop\\a"));
         ThymeleafUtil.render("C:\\Users\\youthred\\Desktop\\a", "C:\\Users\\youthred\\Desktop\\a");
-    }
-
-    public static TemplateEngine ENGINE = TemplateUtil.createEngine(new TemplateConfig("templates", TemplateConfig.ResourceMode.CLASSPATH));
-
-    @Test
-    public void template() {
-        String docName = IdUtil.getSnowflakeNextId() + "";
-        String dir = "C:\\Users\\youthred\\Desktop\\a\\" + docName + "\\";
-        FileUtil.copy("templates/static", dir, true);
-        Template template = ENGINE.getTemplate("index.html");
-        template.render(
-                MapUtil.builder(new HashMap<String, Object>())
-                        .put("title", docName)
-                        .build(),
-                Paths.get(dir + docName + ".html").toFile()
-        );
+//        System.out.println(ReUtil.findAllGroup0(Pattern.compile("docs/.*html"), "<ul>\n" +
+//                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/xa1.html\">a1</a>\n" +
+//                "<ul>\n" +
+//                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/b1.html\">b1</a></li>\n" +
+//                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/b2.html\">b2</a>\n" +
+//                "<ul>\n" +
+//                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/d1.html\">d1</a></li>\n" +
+//                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/d2.html\">d2</a></li>\n" +
+//                "</ul>\n" +
+//                "</li>\n" +
+//                "</ul>\n" +
+//                "</li>\n" +
+//                "</ul>").get(0));
     }
 }
