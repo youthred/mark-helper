@@ -67,4 +67,24 @@ OPTIONS
 
 ## 测试
 
+Markdown文档结构
 
+``` text
+C:\Users\youthred\Desktop\a\a1.md
+C:\Users\youthred\Desktop\a\b\b1.md
+C:\Users\youthred\Desktop\a\b\b2.md
+C:\Users\youthred\Desktop\a\b\d\d1.md
+C:\Users\youthred\Desktop\a\b\d\d2.md
+```
+
+启动执行
+
+``` shell
+shell:>html C:\\Users\\youthred\\Desktop\\a
+生成位置: C:\Users\youthred\Desktop\a-html-20220916224334\
+shell:>
+```
+
+效果
+
+![html-output-demo.png](doc/html-output-demo.png)

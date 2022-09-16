@@ -231,7 +231,7 @@ public class MdUtil {
      * @return Markdown TOC
      */
     public static List<String> genDirTocMd(String dirPath, boolean order) {
-        List<String> mdTitles = getDocFiles(dirPath).stream()
+        List<String> mdTitles = getMdFiles(dirPath).stream()
                 .map(file -> {
                     // 生成相对路径
                     String relativePath = pathCut(file.getPath(), dirPath);
@@ -259,8 +259,8 @@ public class MdUtil {
      * @param docDirPath 文档根目录绝对路径
      * @return 所有MD文档的绝对路径列表
      */
-    public static List<String> getDocsPaths(String docDirPath) {
-        return getDocFiles(docDirPath).stream().map(File::getAbsolutePath).collect(Collectors.toList());
+    public static List<String> getMdsPaths(String docDirPath) {
+        return getMdFiles(docDirPath).stream().map(File::getAbsolutePath).collect(Collectors.toList());
     }
 
     /**
@@ -269,7 +269,7 @@ public class MdUtil {
      * @param docDirPath 文档根目录绝对路径
      * @return 所有MD文档的文件列表
      */
-    private static List<File> getDocFiles(String docDirPath) {
+    private static List<File> getMdFiles(String docDirPath) {
         Path path = Paths.get(docDirPath);
         return FileUtil.loopFiles(path.toFile(), pathname -> FileUtil.getSuffix(pathname).equalsIgnoreCase(MdConstant.SUFFIX));
     }
@@ -284,5 +284,15 @@ public class MdUtil {
     private static String pathCut(String p, String cut) {
         return Paths.get(p).toAbsolutePath().toString().toLowerCase()
                 .replace(Paths.get(cut).toAbsolutePath().toString().toLowerCase(), "");
+    }
+
+    /**
+     * 文件名称前缀转义为锚点ID
+     *
+     * @param fileNamePrefix 件名称前缀
+     * @return 锚点ID
+     */
+    public static String fileNamePrefixToAnchorId(String fileNamePrefix) {
+        return StringUtils.substring(MdTocTextHelper.getTocList(Collections.singletonList("# " + fileNamePrefix)).get(0).split("]\\(#")[1], 0, -1);
     }
 }

@@ -128,9 +128,9 @@ public class RenderUtil {
      * @param targetDirName 输出目录名称
      */
     private static void renderDocs(String docDirPath, String outputDirPath, String targetDirName) {
-        MdUtil.getDocsPaths(docDirPath).forEach(mdPath -> {
+        MdUtil.getMdsPaths(docDirPath).forEach(mdPath -> {
             String docTitle = FileUtil.getPrefix(mdPath);
-            renderDoc(outputDirPath, targetDirName, FileUtil.getPrefix(mdPath),
+            renderDoc(outputDirPath, targetDirName, MdUtil.fileNamePrefixToAnchorId(FileUtil.getPrefix(mdPath)),
                     new Doc()
                             .setTitle(docTitle)
                             .setMdHtml(MdUtil.mdToHtmlByPath(mdPath))
