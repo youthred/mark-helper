@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator;
+package io.github.youthred.markhelper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator.shell;
+package io.github.youthred.markhelper.shell;
 
 import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;

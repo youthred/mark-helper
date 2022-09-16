@@ -1,4 +1,4 @@
-import io.github.youthred.api.generator.util.ThymeleafUtil;
+import io.github.youthred.markhelper.util.ThymeleafUtil;
 import org.junit.Test;
 
 public class MdTest {

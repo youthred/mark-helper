@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator.o;
+package io.github.youthred.markhelper.o;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

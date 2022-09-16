@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator.util;
+package io.github.youthred.markhelper.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.FileUtil;
@@ -7,9 +7,9 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
-import io.github.youthred.api.generator.common.DirConstant;
-import io.github.youthred.api.generator.o.Doc;
-import io.github.youthred.api.generator.o.Index;
+import io.github.youthred.markhelper.common.DirConstant;
+import io.github.youthred.markhelper.o.Doc;
+import io.github.youthred.markhelper.o.Index;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.nio.file.Paths;

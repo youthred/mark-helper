@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator.common;
+package io.github.youthred.markhelper.common;
 
 /**
  * @author https://github.com/youthred

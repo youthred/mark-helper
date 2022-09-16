@@ -1,4 +1,4 @@
-package io.github.youthred.api.generator.util;
+package io.github.youthred.markhelper.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
@@ -39,8 +39,8 @@ import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.data.DataHolder;
 import com.vladsch.flexmark.util.data.MutableDataSet;
-import io.github.youthred.api.generator.common.DirConstant;
-import io.github.youthred.api.generator.common.MdConstant;
+import io.github.youthred.markhelper.common.DirConstant;
+import io.github.youthred.markhelper.common.MdConstant;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
