@@ -32,13 +32,15 @@ public class RenderUtil {
      * 在同级目录生成 [MD目录同名]-html-[date] 的文件夹
      *
      * @param docDirPath MD文档目录绝对路径
+     * @return 输出路径
      */
-    public static void render(String docDirPath) {
+    public static String render(String docDirPath) {
         String outputDirPath = Paths.get(docDirPath).getParent().toAbsolutePath().toFile().getPath();
         String indexTitle = FileUtil.getPrefix(docDirPath);
         String targetDirName = indexTitle + "-html-" + LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
-        renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
+        String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
         renderDocs(docDirPath, outputDirPath, targetDirName);
+        return finalOut;
     }
 
     /**
@@ -46,12 +48,14 @@ public class RenderUtil {
      *
      * @param docDirPath    MD文档目录绝对路径
      * @param outputDirPath HTML文档输出目录绝对路径
+     * @return 输出路径
      */
-    public static void render(String docDirPath, String outputDirPath) {
+    public static String render(String docDirPath, String outputDirPath) {
         String indexTitle = FileUtil.getPrefix(docDirPath);
         String targetDirName = indexTitle + "-html-" + LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
-        renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
+        String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
         renderDocs(docDirPath, outputDirPath, targetDirName);
+        return finalOut;
     }
 
     /**
@@ -60,10 +64,12 @@ public class RenderUtil {
      * @param docDirPath    MD文档目录绝对路径
      * @param outputDirPath HTML文档输出目录绝对路径
      * @param targetDirName 输出目录名称
+     * @return 输出路径
      */
-    public static void render(String docDirPath, String outputDirPath, String targetDirName) {
-        renderIndex(docDirPath, outputDirPath, targetDirName, targetDirName);
+    public static String render(String docDirPath, String outputDirPath, String targetDirName) {
+        String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, targetDirName);
         renderDocs(docDirPath, outputDirPath, targetDirName);
+        return finalOut;
     }
 
     /**
@@ -73,10 +79,12 @@ public class RenderUtil {
      * @param outputDirPath HTML文档输出目录绝对路径
      * @param targetDirName 输出目录名称
      * @param indexTitle    首页标题
+     * @return 输出路径
      */
-    public static void render(String docDirPath, String outputDirPath, String targetDirName, String indexTitle) {
-        renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
+    public static String render(String docDirPath, String outputDirPath, String targetDirName, String indexTitle) {
+        String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
         renderDocs(docDirPath, outputDirPath, targetDirName);
+        return finalOut;
     }
 
     /**
@@ -86,8 +94,9 @@ public class RenderUtil {
      * @param outputDirPath HTML文档输出目录绝对路径
      * @param targetDirName 输出目录名称
      * @param indexTitle    首页标题
+     * @return 输出路径
      */
-    private static void renderIndex(String docDirPath, String outputDirPath, String targetDirName, String indexTitle) {
+    private static String renderIndex(String docDirPath, String outputDirPath, String targetDirName, String indexTitle) {
         String dirTocHtmlExt = MdUtil.genDirTocHtmlExt(docDirPath, false);
         Index index = new Index()
                 .setTitle(indexTitle)
@@ -96,7 +105,7 @@ public class RenderUtil {
         if (CollectionUtils.isNotEmpty(dirTocHrefs)) {
             index.setFirstDocPath(dirTocHrefs.get(0));
         }
-        renderIndex(outputDirPath, targetDirName, index);
+        return renderIndex(outputDirPath, targetDirName, index);
     }
 
     /**
@@ -124,12 +133,14 @@ public class RenderUtil {
      * @param outputDirPath 输出目录绝对路径
      * @param targetDirName 输出目标文件夹名称
      * @param index         Index Object
+     * @return 输出路径
      */
-    private static void renderIndex(String outputDirPath, String targetDirName, Index index) {
+    private static String renderIndex(String outputDirPath, String targetDirName, Index index) {
         String dir = outputDirPath + "\\" + targetDirName + "\\";
         FileUtil.copy("templates/static", dir, true);
         Template template = ENGINE.getTemplate("index.html");
         template.render(BeanUtil.beanToMap(index), Paths.get(dir + "index.html").toFile());
+        return dir;
     }
 
     /**
