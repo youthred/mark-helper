@@ -60,7 +60,7 @@ OPTIONS
 		输出目录名称
 		[Optional, default = <none>]
 
-	-t or indexTitle  string
+	-t or --indexTitle  string
 		首页标题
 		[Optional, default = <none>]
 ```

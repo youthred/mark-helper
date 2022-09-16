@@ -22,7 +22,7 @@ public class MarkHelperShell {
             @ShellOption(value = {"-i", "--docDirPath"}, help = "MD文档目录绝对路径, 反斜杠需自行转义, 默认 同级目录生成 [MD目录同名]-html-[date] 的文件夹") String docDirPath,
             @ShellOption(value = {"-o", "--outputDirPath"}, defaultValue = "__NULL__", help = "HTML文档输出目录绝对路径, 反斜杠需自行转义, 默认 同级目录生成 [MD目录同名]-html-[date] 的文件夹") String outputDirPath,
             @ShellOption(value = {"-n", "--targetDirName"}, defaultValue = "__NULL__", help = "输出目录名称") String targetDirName,
-            @ShellOption(value = {"-t", "indexTitle"}, defaultValue = "__NULL__", help = "首页标题") String indexTitle
+            @ShellOption(value = {"-t", "--indexTitle"}, defaultValue = "__NULL__", help = "首页标题") String indexTitle
     ) {
         if (!FileUtil.exist(docDirPath)) {
             return "目录不存在";
