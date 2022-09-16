@@ -28,6 +28,18 @@ public class RenderUtil {
 
     public static TemplateEngine ENGINE = TemplateUtil.createEngine(new TemplateConfig("templates", TemplateConfig.ResourceMode.CLASSPATH));
 
+    public static String genOutputDirPath(String docDirPath) {
+        return Paths.get(docDirPath).getParent().toAbsolutePath().toFile().getPath();
+    }
+
+    public static String genIndexTitle(String docDirPath) {
+        return FileUtil.getPrefix(docDirPath);
+    }
+
+    public static String genTargetDirName(String docDirPath) {
+        return genIndexTitle(docDirPath) + "-html-" + LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
+    }
+
     /**
      * 在同级目录生成 [MD目录同名]-html-[date] 的文件夹
      *
@@ -35,9 +47,9 @@ public class RenderUtil {
      * @return 输出路径
      */
     public static String render(String docDirPath) {
-        String outputDirPath = Paths.get(docDirPath).getParent().toAbsolutePath().toFile().getPath();
-        String indexTitle = FileUtil.getPrefix(docDirPath);
-        String targetDirName = indexTitle + "-html-" + LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
+        String outputDirPath = genOutputDirPath(docDirPath);
+        String indexTitle = genIndexTitle(docDirPath);
+        String targetDirName = genTargetDirName(docDirPath);
         String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
         renderDocs(docDirPath, outputDirPath, targetDirName);
         return finalOut;
@@ -51,8 +63,8 @@ public class RenderUtil {
      * @return 输出路径
      */
     public static String render(String docDirPath, String outputDirPath) {
-        String indexTitle = FileUtil.getPrefix(docDirPath);
-        String targetDirName = indexTitle + "-html-" + LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
+        String indexTitle = genIndexTitle(docDirPath);
+        String targetDirName = genTargetDirName(docDirPath);
         String finalOut = renderIndex(docDirPath, outputDirPath, targetDirName, indexTitle);
         renderDocs(docDirPath, outputDirPath, targetDirName);
         return finalOut;

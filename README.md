@@ -4,7 +4,14 @@
 > 
 > 将整个Markdown文件夹生成为静态HTML
 
-公共命令
+## 启动
+
+- WINDOWS执行 `run.bat`
+- LINUX执行 `run.sh`
+
+**可使用`TAB`提示命令**
+
+## 公共命令
 
 ``` text
 Built-In Commands
@@ -16,7 +23,7 @@ Built-In Commands
         stacktrace: Display the full stacktrace of the last error.
 ```
 
-`help` 获取帮助
+## `help` 获取帮助
 
 ``` text
 NAME
@@ -31,29 +38,33 @@ OPTIONS
 		[Optional, default = <none>]
 ```
 
-`html` 生成HTML，支持无限层级的markdown文件夹
+## `html` 生成HTML，支持无限层级的markdown文件夹
 
 ``` text
 NAME
-	html - 生成HTML，支持无限层级的markdown文件夹
+	html - 生成HTML, 支持无限层级的markdown文件夹. 可直接使用命令 'html [路径]' 而无需显式拼写命令选项, 其他选项也可省略但值的顺序不可变
 
 SYNOPSYS
 	html [-i] string  [[-o] string]  [[-n] string]  [[-t] string]  
 
 OPTIONS
 	-i or --docDirPath  string
-		MD文档目录绝对路径
+		MD文档目录绝对路径, 反斜杠需自行转义, 默认 同级目录生成 [MD目录同名]-html-[date] 的文件夹
 		[Mandatory]
 
 	-o or --outputDirPath  string
-		HTML文档输出目录绝对路径, 默认 同级目录生成 [MD目录同名]-html-[date] 的文件夹
+		HTML文档输出目录绝对路径, 反斜杠需自行转义, 默认 同级目录生成 [MD目录同名]-html-[date] 的文件夹
 		[Optional, default = <none>]
 
 	-n or --targetDirName  string
-		输出目录名称, 默认 [MD目录同名]-html-[date]
+		输出目录名称
 		[Optional, default = <none>]
 
 	-t or indexTitle  string
-		首页标题, 默认 [MD目录同名]
+		首页标题
 		[Optional, default = <none>]
 ```
+
+## 测试
+
+
