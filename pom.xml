@@ -6,6 +6,7 @@
 
     <groupId>io.github.youthred</groupId>
     <artifactId>mark-helper</artifactId>
+    <name>MarkHelper</name>
     <version>0.1.1</version>
 
     <properties>
@@ -102,6 +103,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>-->
+<!--                                build-info-->
+<!--                            </goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
