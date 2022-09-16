@@ -1,4 +1,4 @@
-import io.github.youthred.markhelper.util.ThymeleafUtil;
+import io.github.youthred.markhelper.util.RenderUtil;
 import org.junit.Test;
 
 public class MdTest {
@@ -357,7 +357,7 @@ public class MdTest {
     public void render() {
 //        System.out.println(MdUtil.genDirTocHtmlExt("C:\\Users\\youthred\\Desktop\\a", true));
 //        System.out.println(FileUtil.getPrefix("C:\\Users\\youthred\\Desktop\\a"));
-        ThymeleafUtil.render("C:\\Users\\youthred\\Desktop\\a", "C:\\Users\\youthred\\Desktop\\a");
+        RenderUtil.render("C:\\Users\\youthred\\Desktop\\a");
 //        System.out.println(ReUtil.findAllGroup0(Pattern.compile("docs/.*html"), "<ul>\n" +
 //                "<li><a onclick=\"setDocTitle(this.text)\" target=\"doc-iframe\"  href=\"docs/xa1.html\">a1</a>\n" +
 //                "<ul>\n" +
@@ -371,5 +371,6 @@ public class MdTest {
 //                "</ul>\n" +
 //                "</li>\n" +
 //                "</ul>").get(0));
+//        System.out.println(Paths.get("C:\\Users\\youthred\\Desktop\\a").getParent());
     }
 }

@@ -53,11 +53,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * For flexmark-java
+ * Markdown工具类 For flexmark-java
  *
  * @author https://github.com/youthred
  */
 public class MdUtil {
+
+    private static final DataHolder OPTIONS = new MutableDataSet()
+            .set(Parser.EXTENSIONS, Arrays.asList(
+                    AbbreviationExtension.create(),
+                    AdmonitionExtension.create(),
+                    AnchorLinkExtension.create(),
+                    AsideExtension.create(),
+                    AttributesExtension.create(),
+                    AutolinkExtension.create(),
+                    DefinitionExtension.create(),
+                    EmojiExtension.create(),
+                    EnumeratedReferenceExtension.create(),
+                    EscapedCharacterExtension.create(),
+                    FootnoteExtension.create(),
+                    GfmIssuesExtension.create(),
+                    GfmUsersExtension.create(),
+                    StrikethroughExtension.create(),
+                    TaskListExtension.create(),
+                    GitLabExtension.create(),
+                    InsExtension.create(),
+                    JekyllFrontMatterExtension.create(),
+                    JekyllTagExtension.create(),
+                    MacrosExtension.create(),
+                    MediaTagsExtension.create(),
+                    SuperscriptExtension.create(),
+                    TablesExtension.create(),
+                    // TocExtension.create(),
+                    TypographicExtension.create(),
+                    WikiLinkExtension.create(),
+                    MacroExtension.create(),
+                    YamlFrontMatterExtension.create(),
+                    YouTubeLinkExtension.create()
+            ))
+            .toImmutable();
 
     /**
      * markdown格式转变成HTML格式
@@ -66,39 +100,6 @@ public class MdUtil {
      * @return rendered html
      */
     public static String mdToHtml(String mdRaw) {
-        final DataHolder OPTIONS = new MutableDataSet()
-                .set(Parser.EXTENSIONS, Arrays.asList(
-                        AbbreviationExtension.create(),
-                        AdmonitionExtension.create(),
-                        AnchorLinkExtension.create(),
-                        AsideExtension.create(),
-                        AttributesExtension.create(),
-                        AutolinkExtension.create(),
-                        DefinitionExtension.create(),
-                        EmojiExtension.create(),
-                        EnumeratedReferenceExtension.create(),
-                        EscapedCharacterExtension.create(),
-                        FootnoteExtension.create(),
-                        GfmIssuesExtension.create(),
-                        GfmUsersExtension.create(),
-                        StrikethroughExtension.create(),
-                        TaskListExtension.create(),
-                        GitLabExtension.create(),
-                        InsExtension.create(),
-                        JekyllFrontMatterExtension.create(),
-                        JekyllTagExtension.create(),
-                        MacrosExtension.create(),
-                        MediaTagsExtension.create(),
-                        SuperscriptExtension.create(),
-                        TablesExtension.create(),
-                        // TocExtension.create(),
-                        TypographicExtension.create(),
-                        WikiLinkExtension.create(),
-                        MacroExtension.create(),
-                        YamlFrontMatterExtension.create(),
-                        YouTubeLinkExtension.create()
-                ))
-                .toImmutable();
         Parser parser = Parser.builder(OPTIONS).build();
         HtmlRenderer renderer = HtmlRenderer.builder(OPTIONS).build();
         // You can re-use parser and renderer instances

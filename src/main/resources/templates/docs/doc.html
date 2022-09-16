@@ -10,8 +10,7 @@
     <title>[[${title}]]</title>
     <link rel="stylesheet" href="../static/mdui/1.0.2/css/mdui.min.css"/>
     <link rel="stylesheet" href="../static/scroll-reset.css"/>
-    <!--    <link rel="stylesheet" href="static/github-markdown/github-markdown-light.css"/>-->
-    <!--    <link rel="stylesheet" href="static/github-markdown/github-markdown-dark.css"/>-->
+    <link rel="stylesheet" href="../static/highlight/styles/github.min.css"/>
     <style>
         html {
             /*平滑滚动*/
@@ -43,7 +42,9 @@
 
 <script src="../static/mdui/1.0.2/js/mdui.min.js"></script>
 <script src="../static/mdui-jq/2.0.1/jq.min.js"></script>
+<script src="../static/highlight/highlight.min.js"></script>
 <script>
+    hljs.highlightAll()
     let $ = JQ
     backTop = () => {
         document.body.scrollTop = document.documentElement.scrollTop = 0
