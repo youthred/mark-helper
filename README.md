@@ -4,6 +4,8 @@
 > 
 > 将整个Markdown文件夹生成为静态HTML
 
+**Require JDK1.8+**
+
 ## 启动
 
 - WINDOWS执行 `run.bat`
